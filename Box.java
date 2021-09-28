@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Box<T> {
+public class Box<T extends Fruit> {
     private ArrayList<T> arr;
 
     public Box() {
@@ -32,11 +32,7 @@ public class Box<T> {
         float weight = 0;
 
         if (!arr.isEmpty()) {
-            if (arr.get(0) instanceof Apple) {
-                weight = ((Apple) arr.get(0)).getWeight() * arr.size();
-            } else {
-                weight = ((Orange) arr.get(0)).getWeight() * arr.size();
-            }
+            weight = arr.get(0).getWeight() * arr.size();
         }
 
         return weight;
