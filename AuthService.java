@@ -10,27 +10,23 @@ import java.util.Optional;
 public class AuthService {
     private DatabaseManager databaseManager;
     private static List<Entry> entries;
-    private ArrayList<String> nicks;
-    private ArrayList<String> passes;
+    private String nick;
+    private String pass;
     private ArrayList<String> users;
 
     public AuthService() {
         databaseManager = new DatabaseManager();
         entries = new ArrayList<>();
-        nicks = new ArrayList<>();
-        passes = new ArrayList<>();
         users = databaseManager.users();
 
         String[] credentials;
         for (String user : users) {
             credentials = user.split("\\s");
 
-            nicks.add(credentials[0]);
-            passes.add(credentials[1]);
-        }
+            nick = credentials[0];
+            pass = credentials[1];
 
-        for (int i = 0; i < users.size(); i++) {
-            entries.add(new Entry(nicks.get(i), passes.get(i)));
+            entries.add(new Entry(nick, pass));
         }
     }
 
