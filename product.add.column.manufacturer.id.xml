@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation=
+                "http://www.liquibase.org/xml/ns/dbchangelog
+                http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                http://www.liquibase.org/xml/ns/pro
+                http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd ">
+
+    <changeSet id="before_product_add_column.MANUFACTURER_ID" author="ev1gilatio">
+        <tagDatabase tag="before_product_add_column_manufacturer_id"/>
+    </changeSet>
+
+    <changeSet id="product_add_column.MANUFACTURER_ID" author="ev1gilatio">
+        <addColumn tableName="PRODUCT">
+            <column name="MANUFACTURER_ID" type="BIGINT"/>
+        </addColumn>
+
+        <addForeignKeyConstraint
+                baseTableName="PRODUCT"
+                baseColumnNames="MANUFACTURER_ID"
+                constraintName="FK_PRODUCT_MANUFACTURER"
+                referencedTableName="MANUFACTURER"
+                referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>

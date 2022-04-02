@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation=
+                "http://www.liquibase.org/xml/ns/dbchangelog
+                http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                http://www.liquibase.org/xml/ns/pro
+                http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd">
+
+    <changeSet id="before_create_table.MANUFACTURER" author="ev1gilatio">
+        <tagDatabase tag="before_create_init_tables"/>
+    </changeSet>
+
+    <changeSet id="create_table.MANUFACTURER" author="ev1gilatio">
+        <createTable tableName="MANUFACTURER">
+            <column name="ID" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table.PRODUCT" author="ev1gilatio">
+        <createTable tableName="PRODUCT">
+            <column name="ID" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="TITLE" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="COST" type="DECIMAL(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="MANUFACTURE_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="VERSION" type="INT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="CREATED_BY" type="varchar(255)"/>
+
+            <column name="CREATED_DATE" type="TIMESTAMP"/>
+
+            <column name="LAST_MODIFIED_BY" type="varchar(255)"/>
+
+            <column name="LAST_MODIFIED_DATE" type="TIMESTAMP"/>
+
+            <column name="STATUS" type="VARCHAR(20)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table.CATEGORY" author="ev1gilatio">
+        <createTable tableName="CATEGORY">
+            <column name="ID" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="TITLE" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table.PRODUCT_CATEGORY" author="ev1gilatio">
+        <createTable tableName="PRODUCT_CATEGORY">
+            <column name="PRODUCT_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="CATEGORY_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="PRODUCT_CATEGORY"
+                columnNames="PRODUCT_ID, CATEGORY_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="PRODUCT_CATEGORY"
+                baseColumnNames="PRODUCT_ID"
+                constraintName="FK_PRODUCT_CATEGORY_PRODUCT"
+                referencedTableName="PRODUCT"
+                referencedColumnNames="ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="PRODUCT_CATEGORY"
+                baseColumnNames="CATEGORY_ID"
+                constraintName="FK_PRODUCT_CATEGORY_CATEGORY"
+                referencedTableName="CATEGORY"
+                referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>
